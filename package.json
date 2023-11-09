@@ -1,6 +1,18 @@
 {
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "node index.js",
+    "devStart": "concurrently \"npx tsc --watch\" \"nodemon -q index.js\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.16",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.5",
     "@types/mysql": "^2.15.24",
+    "@types/passport": "^1.0.15",
     "bcrypt": "^5.1.1",
     "concurrently": "^8.2.2",
     "cors": "^2.8.5",

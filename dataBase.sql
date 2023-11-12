@@ -2,30 +2,43 @@ drop database if exists parcelDelivery;
 create database parcelDelivery;
 use parcelDelivery;
 
+CREATE TABLE `user` (
+  `id_user` INT NOT NULL AUTO_INCREMENT,
+  `user_name` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `first_name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `telephone` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `street_address` VARCHAR(45) NOT NULL,
+  `postal_code` CHAR(5) NOT NULL,
+  `city` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_user`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 CREATE TABLE `parcel` (
-  `id_parcel` int NOT NULL,
-  `id_user` int DEFAULT NULL,
-  `id_locker` int DEFAULT NULL,
-  `reciever_name` varchar(45) NOT NULL,
-  `reciever_telephone` varchar(45) NOT NULL,
-  `reciever_street_address` varchar(45) NOT NULL,
-  `reciever_postal_code` char(6) NOT NULL,
-  `reciever_city` varchar(45) NOT NULL,
-  `sender_name` varchar(45) NOT NULL,
-  `sender_telephone` varchar(45) DEFAULT NULL,
-  `sender_street_address` varchar(45) DEFAULT NULL,
-  `sender_postal_code` char(5) DEFAULT NULL,
-  `sender_city` varchar(45) DEFAULT NULL,
-  `parcel_dropoff_date` date NOT NULL,
-  `parcel_pickup_date` date NOT NULL,
-  `parcel_last_pickup_date` date NOT NULL,
-  `parcel_dropoff_code` int DEFAULT NULL,
-  `parcel_pickup_code` int DEFAULT NULL,
-  `status` tinyint NOT NULL,
+  `id_parcel` INT NOT NULL AUTO_INCREMENT,
+  `id_user` INT DEFAULT NULL,
+  `locker_number` TINYINT DEFAULT NULL,
+  `reciever_name` VARCHAR(45) NOT NULL,
+  `reciever_telephone` VARCHAR(45) NOT NULL,
+  `reciever_street_address` VARCHAR(45) NOT NULL,
+  `reciever_postal_code` CHAR(6) NOT NULL,
+  `reciever_city` VARCHAR(45) NOT NULL,
+  `sender_name` VARCHAR(45) NOT NULL,
+  `sender_telephone` VARCHAR(45) DEFAULT NULL,
+  `sender_street_address` VARCHAR(45) DEFAULT NULL,
+  `sender_postal_code` CHAR(5) DEFAULT NULL,
+  `sender_city` VARCHAR(45) DEFAULT NULL,
+  `parcel_dropoff_date` DATE NOT NULL,
+  `parcel_pickup_date` DATE NOT NULL,
+  `parcel_last_pickup_date` DATE NOT NULL,
+  `parcel_dropoff_code` INT DEFAULT NULL,
+  `parcel_pickup_code` INT DEFAULT NULL,
+  `status` TINYINT NOT NULL,
   PRIMARY KEY (`id_parcel`),
-  KEY `id_locker_idx` (`id_locker`),
+  KEY `locker_number_idx` (`locker_number`),
   KEY `id_user_idx` (`id_user`),
-  CONSTRAINT `id_locker` FOREIGN KEY (`id_locker`) REFERENCES `locker` (`parcel_id`),
   CONSTRAINT `id_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*
@@ -36,28 +49,15 @@ Values for parcel status:
 4 - parcel is delivered to the reciever (final status)
 */
 
-CREATE TABLE `user` (
-  `id_user` int NOT NULL,
-  `user_name` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
-  `first_name` varchar(45) NOT NULL,
-  `last_name` varchar(45) NOT NULL,
-  `telephone` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `street_address` varchar(45) NOT NULL,
-  `postal_code` char(5) NOT NULL,
-  `city` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 CREATE TABLE `locker` (
-  `id_cabinet` tinyint NOT NULL,
-  `parcel_id` int DEFAULT NULL,
-  `locker_number` tinyint NOT NULL,
-  `cabinet_status` tinyint NOT NULL,
+  `id_cabinet` TINYINT NOT NULL,
+  `parcel_id` INT DEFAULT NULL,
+  `locker_number` TINYINT NOT NULL,
+  `cabinet_status` TINYINT NOT NULL,
   PRIMARY KEY (`id_cabinet`),
+  UNIQUE KEY `unique_locker_number` (`locker_number`),
   KEY `parcel_id_idx` (`parcel_id`),
-  CONSTRAINT `parcel_id` FOREIGN KEY (`parcel_id`) REFERENCES `parcel` (`id_parcel`)
+  CONSTRAINT `parcel_id` FOREIGN KEY (`parcel_id`) REFERENCES `parcel` (`id_parcel`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*
 Values for cabinet status:
@@ -65,3 +65,6 @@ Values for cabinet status:
 2 - parcel to dropoff
 3 - parcel to pickup
 */
+
+ALTER TABLE `parcel`
+ADD CONSTRAINT `locker_number` FOREIGN KEY (`locker_number`) REFERENCES `locker` (`locker_number`) ON DELETE SET NULL;

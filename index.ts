@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import parcelRouter from './controllers/parcel_controller';
+import userRouter from './controllers/user_controller';
 
 
 dotenv.config();
@@ -13,6 +14,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/parcel', parcelRouter);
+app.use('/user', userRouter);
+
+
+
 
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);

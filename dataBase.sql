@@ -55,7 +55,6 @@ CREATE TABLE `locker` (
   `locker_number` TINYINT NOT NULL,
   `cabinet_status` TINYINT NOT NULL,
   PRIMARY KEY (`id_cabinet`),
-  UNIQUE KEY `unique_locker_number` (`locker_number`),
   KEY `parcel_id_idx` (`parcel_id`),
   CONSTRAINT `parcel_id` FOREIGN KEY (`parcel_id`) REFERENCES `parcel` (`id_parcel`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -66,5 +65,15 @@ Values for cabinet status:
 3 - parcel to pickup
 */
 
+/*
 ALTER TABLE `parcel`
 ADD CONSTRAINT `locker_number` FOREIGN KEY (`locker_number`) REFERENCES `locker` (`locker_number`) ON DELETE SET NULL;
+*/
+
+ALTER TABLE `parcelDelivery`.`parcel` 
+ADD COLUMN `parcel_dropoff_locker` TINYINT(5) NOT NULL AFTER `status`,
+ADD COLUMN `parcel_pickup_locker` TINYINT(5) NOT NULL AFTER `parcel_dropoff_locker`,
+ADD COLUMN `parcel_height` FLOAT NOT NULL AFTER `parcel_pickup_locker`,
+ADD COLUMN `parcel_width` FLOAT NOT NULL AFTER `parcel_height`,
+ADD COLUMN `parcel_depth` FLOAT NOT NULL AFTER `parcel_width`,
+ADD COLUMN `marcel_mass` FLOAT NOT NULL AFTER `parcel_depth`;

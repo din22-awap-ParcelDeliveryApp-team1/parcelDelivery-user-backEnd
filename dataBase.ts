@@ -6,7 +6,7 @@ dotenv.config();
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
     user: "root",
-    database: "parcelDelivery",
+    database: process.env.DB_NAME,
     password: process.env.DB_PASSWORD,
     port: 3306
 });

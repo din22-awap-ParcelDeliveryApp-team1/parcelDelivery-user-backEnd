@@ -121,16 +121,6 @@ Values for parcel status:
 -- select * from user;
 -- select * from parcel;
 -- select * from locker;
-/*
-ALTER TABLE `parcel`
-ADD CONSTRAINT `locker_number` FOREIGN KEY (`locker_number`) REFERENCES `locker` (`locker_number`) ON DELETE SET NULL;
-*/
 
-ALTER TABLE `parcelDelivery`.`parcel` 
-ADD COLUMN `parcel_dropoff_locker` TINYINT(5) NOT NULL AFTER `status`,
-ADD COLUMN `parcel_pickup_locker` TINYINT(5) NOT NULL AFTER `parcel_dropoff_locker`,
-ADD COLUMN `parcel_height` FLOAT NOT NULL AFTER `parcel_pickup_locker`,
-ADD COLUMN `parcel_width` FLOAT NOT NULL AFTER `parcel_height`,
-ADD COLUMN `parcel_depth` FLOAT NOT NULL AFTER `parcel_width`,
-ADD COLUMN `marcel_mass` FLOAT NOT NULL AFTER `parcel_depth`;
+
 

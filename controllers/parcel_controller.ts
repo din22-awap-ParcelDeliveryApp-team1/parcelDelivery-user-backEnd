@@ -18,7 +18,7 @@ router.get('/sent/:id', async (req, res) => {
 });
 
 // Get parcels received by the logged in user
-router.get('/recieved/:id', async (req, res) => {
+router.get('/received/:id', async (req, res) => {
     const userid = parseInt(req.params.id);
     try {
         const receivedParcels = await parcel.getRecievedParcels(userid);

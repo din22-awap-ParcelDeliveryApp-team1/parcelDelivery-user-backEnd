@@ -1,12 +1,14 @@
 import connection from '../dataBase';
+import { RowDataPacket } from 'mysql2';
 
 const parcel = {
     // Get parcels where sender is the logged in user
     getSentParcels: async (userid: number) => {
         try {
             const query = `SELECT * FROM parcel JOIN user ON parcel.id_user=user.id_user WHERE user.id_user = ?`;
-            const result = await connection.promise().query(query, [userid]);
-            return result
+            const result = await connection.promise().query<RowDataPacket[]>(query, [userid]);
+
+            return result[0];
         }
         catch (e: any) {
             console.error(e.message);
@@ -22,14 +24,15 @@ const parcel = {
             
             // then get the parcels where the reciever has the user telephonenumber
             const query = `SELECT * FROM parcel WHERE reciever_telephone = ?`;
-            const result = await connection.promise().query(query, [resultNumber[0][0].telephone]);
-            return result
+            const result = await connection.promise().query<RowDataPacket[]>(query, [resultNumber[0][0].telephone]);
+            
+            return result[0];
         }
         catch (e: any) {
             console.error(e.message);
             return `Error from parcel model: ${e.message}`;
         }
-    },
+    }
 }
 
 export default parcel;

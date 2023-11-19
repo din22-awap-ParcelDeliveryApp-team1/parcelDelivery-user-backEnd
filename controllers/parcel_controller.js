@@ -21,7 +21,6 @@ router.get('/sent/:id', (req, res) => __awaiter(void 0, void 0, void 0, function
     try {
         const sentParcels = yield parcel_model_1.default.getSentParcels(userid);
         res.status(200).json(sentParcels);
-        console.log(sentParcels[0]);
     }
     catch (e) {
         console.error(e.message);
@@ -29,7 +28,7 @@ router.get('/sent/:id', (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 }));
 // Get parcels received by the logged in user
-router.get('/recieved/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/received/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userid = parseInt(req.params.id);
     try {
         const receivedParcels = yield parcel_model_1.default.getRecievedParcels(userid);

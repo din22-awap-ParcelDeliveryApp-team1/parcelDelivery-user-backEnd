@@ -1,6 +1,6 @@
 DROP DATABASE IF EXISTS parcelDelivery;
 CREATE DATABASE parcelDelivery;
-USE parceldelivery;
+USE parcelDelivery;
 
 CREATE TABLE `user` (
   `id_user` INT NOT NULL AUTO_INCREMENT,

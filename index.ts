@@ -6,6 +6,7 @@ import parcelRouter from './controllers/parcel_controller';
 import userRouter from './controllers/user_controller';
 
 
+
 dotenv.config();
 const PORT = 3001;
 const app: Express = express();
@@ -15,6 +16,10 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/parcel', parcelRouter);
 app.use('/user', userRouter);
+//post new parcel
+app.post('/parcel', parcelRouter);
+
+
 
 
 

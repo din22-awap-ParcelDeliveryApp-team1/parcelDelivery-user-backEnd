@@ -19,7 +19,7 @@ const parcel = {
         try {
             const query = `SELECT * FROM parcel JOIN user ON parcel.id_user=user.id_user WHERE user.id_user = ?`;
             const result = yield dataBase_1.default.promise().query(query, [userid]);
-            return result;
+            return result[0];
         }
         catch (e) {
             console.error(e.message);
@@ -35,7 +35,7 @@ const parcel = {
             // then get the parcels where the reciever has the user telephonenumber
             const query = `SELECT * FROM parcel WHERE reciever_telephone = ?`;
             const result = yield dataBase_1.default.promise().query(query, [resultNumber[0][0].telephone]);
-            return result;
+            return result[0];
         }
         catch (e) {
             console.error(e.message);

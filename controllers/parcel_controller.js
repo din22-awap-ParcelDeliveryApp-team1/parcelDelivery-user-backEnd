@@ -29,11 +29,23 @@ router.get('/sent/:id', (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 }));
 // Get parcels received by the logged in user
-router.get('/recieved/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/received/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userid = parseInt(req.params.id);
     try {
         const receivedParcels = yield parcel_model_1.default.getRecievedParcels(userid);
         res.status(200).json(receivedParcels);
+    }
+    catch (e) {
+        console.error(e.message);
+        res.status(500).send("Server error from parcel controller");
+    }
+}));
+// Post information of a new parcel to the database
+router.post('/parcel', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const newParcel = req.body;
+    try {
+        const result = yield parcel_model_1.default.postParcel(newParcel);
+        res.status(200).json(result);
     }
     catch (e) {
         console.error(e.message);

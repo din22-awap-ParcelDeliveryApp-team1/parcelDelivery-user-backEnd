@@ -17,7 +17,10 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use('/parcel', parcel_controller_1.default);
 app.use('/user', user_controller_1.default);
-//app.use('/signin', signinRouter);
+
+//post new parcel
+app.post('/parcel', parcel_controller_1.default);
+
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
 });

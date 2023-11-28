@@ -7,6 +7,7 @@ import userRouter from './controllers/user_controller';
 //import signinRouter from './controllers/signin_controller';
 
 
+
 dotenv.config();
 const PORT = 3001;
 const app: Express = express();
@@ -16,9 +17,9 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/parcel', parcelRouter);
 app.use('/user', userRouter);
-//app.use('/signin', signinRouter);
 
-
+//post new parcel
+app.post('/parcel', parcelRouter);
 
 
 app.listen(PORT, () => {

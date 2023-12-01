@@ -42,6 +42,11 @@ router.get('/received/:id', (req, res) => __awaiter(void 0, void 0, void 0, func
 // Post information of a new parcel to the database
 router.post('/parcel', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const newParcel = req.body;
+    // Convert date strings to Date objects
+    newParcel.parcel_dropoff_date = new Date(newParcel.parcel_dropoff_date);
+    newParcel.parcel_readyforpickup_date = new Date(newParcel.parcel_readyforpickup_date);
+    newParcel.parcel_pickup_date = new Date(newParcel.parcel_pickup_date);
+    newParcel.parcel_last_pickup_date = new Date(newParcel.parcel_last_pickup_date);
     try {
         const result = yield parcel_model_1.default.postParcel(newParcel);
         res.status(200).json(result);

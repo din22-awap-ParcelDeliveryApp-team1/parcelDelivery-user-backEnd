@@ -51,7 +51,10 @@ const parcel = {
             parcel.status = 'ready_to_deliver';
             const query = `INSERT INTO parcel SET ?`;
             const result = yield dataBase_1.default.promise().query(query, [parcel]);
-            return result;
+            // Return an object containing the pin code along with other data
+            return {
+                pin_code: code,
+            };
         }
         catch (e) {
             console.error(e.message);

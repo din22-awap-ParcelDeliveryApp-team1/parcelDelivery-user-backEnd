@@ -13,8 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const dataBase_1 = __importDefault(require("../dataBase"));
-const bcrypt_1 = __importDefault(require("bcrypt"));
-/* http://localhost:3001/user/check-userName */
+//import bcrypt from 'bcrypt';
+const crypto_1 = __importDefault(require("crypto"));
+/*
+http://localhost:3001/user/check-userName */
+//http://localhost:3001/user/check-username?user_name=some
 //last year logic, for regester user, check if user name exists
 //use hashed password
 //1124 code 
@@ -76,13 +79,15 @@ const user = {
         if (isUserExists) {
             throw new Error('Username already exists');
         }
-        const hashedPassword = yield bcrypt_1.default.hash(password, 10);
+        const salt = "ParcelDeliveryApp";
+        const hashedPassword = crypto_1.default.pbkdf2Sync(password, salt, 10, 20, 'sha512').toString('hex');
+        //const hashedPassword = await bcrypt.hash(password, 10);
         try {
             const query = `INSERT INTO user (
                 user_name, password, first_name, last_name, telephone, 
                 email, street_address, postal_code, city) VALUES (?, ?, ?, ?, ?,?, ?, ?, ?)`;
             const result = yield dataBase_1.default.promise().query(query, [
-                user_name, password, first_name, last_name, telephone, email, street_address, postal_code, city
+                user_name, hashedPassword, first_name, last_name, telephone, email, street_address, postal_code, city
             ]);
             console.log(user_name);
             return result[0];
@@ -95,8 +100,11 @@ const user = {
     // Update user
     updateUser: (userid, user_name, password, first_name, last_name, telephone, email, street_address, postal_code, city) => __awaiter(void 0, void 0, void 0, function* () {
         try {
+            const salt = "ParcelDeliveryApp";
+            const hashedPassword = crypto_1.default.pbkdf2Sync(password, salt, 10, 20, 'sha512').toString('hex');
+            //const hashedPassword = await bcrypt.hash(password, 10);
             const query = `UPDATE user SET first_name = ?, last_name=?, email = ?, password = ?, telephone = ?, Street_address = ? WHERE id_user = ?`;
-            const result = yield dataBase_1.default.promise().query(query, [password, user_name, first_name, last_name, telephone, email, street_address, postal_code, city, userid]);
+            const result = yield dataBase_1.default.promise().query(query, [hashedPassword, user_name, first_name, last_name, telephone, email, street_address, postal_code, city, userid]);
             return result[0];
         }
         catch (e) {

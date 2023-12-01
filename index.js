@@ -8,7 +8,7 @@ const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const parcel_controller_1 = __importDefault(require("./controllers/parcel_controller"));
 const user_controller_1 = __importDefault(require("./controllers/user_controller"));
-//import signinRouter from './controllers/signin_controller';
+const signin_controller_1 = __importDefault(require("./controllers/signin_controller"));
 dotenv_1.default.config();
 const PORT = 3001;
 const app = (0, express_1.default)();
@@ -17,7 +17,7 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use('/parcel', parcel_controller_1.default);
 app.use('/user', user_controller_1.default);
-//app.use('/signin', signinRouter);
+app.use('/signin', signin_controller_1.default);
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
 });

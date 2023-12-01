@@ -1,6 +1,6 @@
 DROP DATABASE IF EXISTS parcelDelivery;
 CREATE DATABASE parcelDelivery;
-USE parceldelivery;
+USE parcelDelivery;
 
 INSERT INTO `parcel` (
   `id_user`, `reciever_name`, `reciever_telephone`, `reciever_street_address`, `reciever_postal_code`, 

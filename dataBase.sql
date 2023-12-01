@@ -33,6 +33,7 @@ INSERT INTO `user` (
   '12345', 'Springfield'
 );
 
+
 CREATE TABLE `user` (
   `id_user` INT NOT NULL AUTO_INCREMENT,
   `user_name` VARCHAR(45) NOT NULL UNIQUE,

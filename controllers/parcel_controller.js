@@ -39,4 +39,16 @@ router.get('/received/:id', (req, res) => __awaiter(void 0, void 0, void 0, func
         res.status(500).send("Server error from parcel controller");
     }
 }));
+// Post information of a new parcel to the database
+router.post('/parcel', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const newParcel = req.body;
+    try {
+        const result = yield parcel_model_1.default.postParcel(newParcel);
+        res.status(200).json(result);
+    }
+    catch (e) {
+        console.error(e.message);
+        res.status(500).send("Server error from parcel controller");
+    }
+}));
 exports.default = router;

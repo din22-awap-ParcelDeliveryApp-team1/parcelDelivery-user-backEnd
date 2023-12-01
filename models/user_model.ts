@@ -61,7 +61,6 @@ const user = {
             return `Error from user model: ${e.message}`;
         }
     },
-
 };
 
 export default user;

@@ -16,7 +16,6 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/parcel', parcelRouter);
 app.use('/user', userRouter);
-//post new parcel
 app.post('/parcel', parcelRouter);
 
 

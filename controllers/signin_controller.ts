@@ -1,4 +1,4 @@
-import express, { Request, Response }from 'express';
+import express, { Request, Response } from 'express';
 import signin_model from '../models/signin_model';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
@@ -10,10 +10,8 @@ interface User {
     user_name: string;
     password: string;
 }
-// the thunder client api test http 
-http://localhost:3001/signin
 
-router.post('/', async (req:Request, res:Response) => {
+router.post('/', async (req: Request, res: Response) => {
     //parameter at here needs to be same as frontend
     const { user_name, password } = req.body;
     console.log("userName: " + user_name + ", password: " + password);
@@ -44,7 +42,7 @@ router.post('/', async (req:Request, res:Response) => {
             token: token,
             message: "You are logged in",
             success: true
-        });
+        }); 
     } catch (error) {
         console.log("error: " + res.statusMessage);
         res.status(500).json({ message: 'Internal Server Error', error });
@@ -53,19 +51,19 @@ router.post('/', async (req:Request, res:Response) => {
 
 router.get('/verify', async (req, res) => {
     const token = req.cookies['token'];
-    if(!token) 
-    {return res.status(401).send("unauthorized");}
-    try{
+    if (!token) { return res.status(401).send("unauthorized"); }
+    try {
         const payload = jwt.verify(token, secretkey) as jwt.JwtPayload;
         res.status(200).json(payload);
-    }catch(error){
-        if(error instanceof jwt.TokenExpiredError){
+    } catch (error) {
+        if (error instanceof jwt.TokenExpiredError) {
             res.status(401).send("Token expired. Log in again");
-        }else if (error instanceof jwt.JsonWebTokenError){
-            res.status(401).send("Invalid token. Log in again");}
-            else{ 
+        } else if (error instanceof jwt.JsonWebTokenError) {
+            res.status(401).send("Invalid token. Log in again");
+        }
+        else {
             res.status(400).send("Bad request");
-    }
+        }
     }
 });
 

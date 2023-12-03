@@ -6,9 +6,9 @@ const parcel = {
     // Get parcels where sender is the logged in user
     getSentParcels: async (userid: number) => {
         try {
-            const query = `SELECT * FROM parcel WHERE user.id_user = ?`;
+            const query = `SELECT * FROM parcel WHERE id_user = ?`;
             const result = await connection.promise().query<RowDataPacket[]>(query, [userid]);
-
+    
             return result[0];
         }
         catch (e: any) {

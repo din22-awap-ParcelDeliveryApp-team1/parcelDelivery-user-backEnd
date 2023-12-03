@@ -18,9 +18,7 @@ const crypto_1 = __importDefault(require("crypto"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const router = express_1.default.Router();
 const secretkey = process.env.JWT_SECRET;
-// the thunder client api test http 
-http: //localhost:3001/signin
- router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //parameter at here needs to be same as frontend
     const { user_name, password } = req.body;
     console.log("userName: " + user_name + ", password: " + password);

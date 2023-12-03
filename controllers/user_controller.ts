@@ -5,14 +5,10 @@ const router = express.Router();
 
 interface User {
   id_user: number;
-
-  // Add other properties of the user if applicable
 }
-// the thunder client api test http 
 // http://localhost:3001/user/check-username?user_name=akui
 
 //check if user exists
-//11-27 new code 
 router.get('/check-username', async (req:Request, res:Response) => {
   console.log(req.body + "user_controller");
   
@@ -40,7 +36,6 @@ router.post('/', async (req:Request, res:Response) => {
   
   const {user_name, password, first_name, last_name, telephone, email, street_address, postal_code, city} = req.body;
   
-
   try{
     const newUser = await user.createUser(user_name, password, first_name, last_name, telephone, email, street_address, postal_code, city);
     res.status(201).json({ message: 'User created successfully', newUser });
@@ -70,7 +65,7 @@ router.get('/:userId', async (req:Request, res:Response) => {
  
 // delete user by id
 router.delete('/:userId', async (req, res) => {
-  const userId = parseInt(req.params.userId, 10); // Extract the user ID from the URL parameter
+  const userId = parseInt(req.params.userId, 10); 
 
   try {
     const userData = await user.deleteUser(userId);

@@ -1,6 +1,5 @@
 import express, { Request, Response }from 'express';
 import signin_model from '../models/signin_model';
-//import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 
@@ -13,7 +12,6 @@ interface User {
 }
 // the thunder client api test http 
 http://localhost:3001/signin
-
 
 router.post('/', async (req:Request, res:Response) => {
     //parameter at here needs to be same as frontend
@@ -52,8 +50,6 @@ router.post('/', async (req:Request, res:Response) => {
         res.status(500).json({ message: 'Internal Server Error', error });
     }
 });
-
-
 
 router.get('/verify', async (req, res) => {
     const token = req.cookies['token'];

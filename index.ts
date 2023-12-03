@@ -20,7 +20,6 @@ app.use('/parcel', parcelRouter);
 app.use('/user', userRouter);
 app.use('/signin', signinRouter);
 
-//post new parcel
 app.post('/parcel', parcelRouter);
 
 

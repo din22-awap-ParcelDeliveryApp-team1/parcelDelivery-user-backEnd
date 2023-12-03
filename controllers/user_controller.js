@@ -15,10 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const user_model_1 = __importDefault(require("../models/user_model"));
 const router = express_1.default.Router();
-// the thunder client api test http 
 // http://localhost:3001/user/check-username?user_name=akui
 //check if user exists
-//11-27 new code 
 router.get('/check-username', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.body + "user_controller");
     const user_name = req.query.user_name;
@@ -69,7 +67,7 @@ router.get('/:userId', (req, res) => __awaiter(void 0, void 0, void 0, function*
 }));
 // delete user by id
 router.delete('/:userId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const userId = parseInt(req.params.userId, 10); // Extract the user ID from the URL parameter
+    const userId = parseInt(req.params.userId, 10);
     try {
         const userData = yield user_model_1.default.deleteUser(userId);
         if (userData.length === 0) {

@@ -24,7 +24,6 @@ const signin_model = {
             console.log("sing checkuser 2" + exist_userName_result);
             if (exist_userName_result.length > 0) {
                 console.log("sing checkuser 3");
-                console.log(exist_userName_result[0]);
                 return exist_userName_result[0]; // Return the user object
             }
             console.log("sing checkuser 4");

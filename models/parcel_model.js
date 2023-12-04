@@ -17,7 +17,7 @@ const parcel = {
     // Get parcels where sender is the logged in user
     getSentParcels: (userid) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const query = `SELECT * FROM parcel JOIN user ON parcel.id_user=user.id_user WHERE user.id_user = ?`;
+            const query = `SELECT * FROM parcel WHERE id_user = ?`;
             const result = yield dataBase_1.default.promise().query(query, [userid]);
             return result[0];
         }

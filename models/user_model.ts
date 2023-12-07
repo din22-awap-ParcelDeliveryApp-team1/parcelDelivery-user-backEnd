@@ -77,8 +77,12 @@ import crypto from 'crypto';
             const result = await connection.promise().query(query, [
                 user_name, hashedPassword, first_name, last_name, telephone, email, street_address, postal_code, city]);
             
-                console.log(user_name);    
-                return result[0] as any;
+                console.log('result: ', result[0]);
+                if((result[0] as any).insertId !== undefined) {
+                    return (await user.getUser((result[0] as any).insertId) as any)[0];
+                }else {
+                    return result[0] as any;
+                }
         }
         catch (e: any) {
             console.error(e.message);

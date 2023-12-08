@@ -1,6 +1,5 @@
 import connection from "../dataBase";
 import { RowDataPacket } from 'mysql2';
-//import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 
 /* 
@@ -14,7 +13,7 @@ http://localhost:3001/user/check-userName */
     // Get all users
     getUsers: async () => {
         try {
-            const query = `SELECT * FROM user`;
+            const query = `SELECT * FROM user `;
             const result = await connection.promise().query(query);
             return result
         }
@@ -24,10 +23,11 @@ http://localhost:3001/user/check-userName */
         }
     },
     // Get user by id
-    getUser: async (userid: number) => {
+    getUser: async (userId: number) => {
         try {
+            console.log("userId: "+userId);
             const query = `SELECT * FROM user WHERE id_user = ?`;
-            const result = await connection.promise().query(query, [userid]);
+            const result = await connection.promise().query(query, [userId]);
             console.log(result);
             return result[0] as any;
         }

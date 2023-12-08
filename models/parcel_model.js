@@ -41,6 +41,22 @@ const parcel = {
             console.error(e.message);
             return `Error from parcel model: ${e.message}`;
         }
-    })
+    }),
+    //Post information of a new parcel to the database
+    postParcel: (parcel) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            // Generate a random 4 digit pin code
+            const code = Math.floor(1000 + Math.random() * 9000);
+            parcel.pin_code = code;
+            parcel.status = 'ready_to_deliver';
+            const query = `INSERT INTO parcel SET ?`;
+            const result = yield dataBase_1.default.promise().query(query, [parcel]);
+            return result;
+        }
+        catch (e) {
+            console.error(e.message);
+            return `Error from parcel model: ${e.message}`;
+        }
+    }),
 };
 exports.default = parcel;

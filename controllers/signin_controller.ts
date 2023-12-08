@@ -12,7 +12,7 @@ interface User {
     password: string;
 }
 // the thunder client api test http 
-http://localhost:3001/signin
+//http://localhost:3001/signin
 
 
 router.post('/', async (req:Request, res:Response) => {
@@ -23,7 +23,7 @@ router.post('/', async (req:Request, res:Response) => {
         const user = await signin_model.checkifUserExists(user_name); //as unknown as { user_name: string, password:string, id_user:number };        
 
         if (!user) {
-            console.log("controller2");
+            console.log("user 404");
             return res.status(404).json({ message: 'Username does not exist' });
         }
         console.log("controller ifMatchPwd: " + password + ":" + user.password);

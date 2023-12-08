@@ -20,15 +20,15 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const router = express_1.default.Router();
 const secretkey = process.env.JWT_SECRET;
 // the thunder client api test http 
-http: //localhost:3001/signin
- router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+//http://localhost:3001/signin
+router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //parameter at here needs to be same as frontend
     const { user_name, password } = req.body;
     console.log("userName: " + user_name + ", password: " + password);
     try {
         const user = yield signin_model_1.default.checkifUserExists(user_name); //as unknown as { user_name: string, password:string, id_user:number };        
         if (!user) {
-            console.log("controller2");
+            console.log("user 404");
             return res.status(404).json({ message: 'Username does not exist' });
         }
         console.log("controller ifMatchPwd: " + password + ":" + user.password);

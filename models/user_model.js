@@ -13,7 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const dataBase_1 = __importDefault(require("../dataBase"));
-//import bcrypt from 'bcrypt';
 const crypto_1 = __importDefault(require("crypto"));
 /*
 http://localhost:3001/user/check-userName */
@@ -25,7 +24,7 @@ const user = {
     // Get all users
     getUsers: () => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const query = `SELECT * FROM user`;
+            const query = `SELECT * FROM user `;
             const result = yield dataBase_1.default.promise().query(query);
             return result;
         }
@@ -35,10 +34,11 @@ const user = {
         }
     }),
     // Get user by id
-    getUser: (userid) => __awaiter(void 0, void 0, void 0, function* () {
+    getUser: (userId) => __awaiter(void 0, void 0, void 0, function* () {
         try {
+            console.log("userId: " + userId);
             const query = `SELECT * FROM user WHERE id_user = ?`;
-            const result = yield dataBase_1.default.promise().query(query, [userid]);
+            const result = yield dataBase_1.default.promise().query(query, [userId]);
             console.log(result);
             return result[0];
         }

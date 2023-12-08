@@ -18,7 +18,6 @@ const router = express_1.default.Router();
 // the thunder client api test http 
 // http://localhost:3001/user/check-username?user_name=akui
 //check if user exists
-//11-27 new code 
 router.get('/check-username', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.body + "user_controller");
     const user_name = req.query.user_name;
@@ -52,9 +51,29 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 // Get user by id
 router.get('/:userId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const userId = parseInt(req.params.userId, 10); // Extract the user ID from the URL parameter
+    const userId = parseInt(req.params.userId); // Extract the user ID from the URL parameter
+    console.log("DBG userId parseInt : " + req.params.userId);
+    console.log("DBG get userID : " + JSON.stringify(req.params));
     try {
         const userData = yield user_model_1.default.getUser(userId);
+        if (userData.length === 0) {
+            res.status(404).json({ error: 'User not found' });
+        }
+        else {
+            res.json(userData);
+        }
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}));
+//update user by id
+router.put('/:userId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = parseInt(req.params.userId); // Extract the user ID from the URL parameter
+    const { user_name, password, first_name, last_name, telephone, email, street_address, postal_code, city } = req.body;
+    try {
+        const userData = yield user_model_1.default.updateUser(userId, user_name, password, first_name, last_name, telephone, email, street_address, postal_code, city);
         if (userData.length === 0) {
             res.status(404).json({ error: 'User not found' });
         }

@@ -74,8 +74,13 @@ const user = {
             const result = yield dataBase_1.default.promise().query(query, [
                 user_name, hashedPassword, first_name, last_name, telephone, email, street_address, postal_code, city
             ]);
-            console.log(user_name);
-            return result[0];
+            console.log('result: ', result[0]);
+            if (result[0].insertId !== undefined) {
+                return (yield user.getUser(result[0].insertId))[0];
+            }
+            else {
+                return result[0];
+            }
         }
         catch (e) {
             console.error(e.message);

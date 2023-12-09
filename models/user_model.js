@@ -32,7 +32,6 @@ const user = {
         try {
             const query = `SELECT * FROM user WHERE id_user = ?`;
             const result = yield dataBase_1.default.promise().query(query, [userid]);
-            console.log(result);
             return result[0];
         }
         catch (e) {
@@ -45,9 +44,6 @@ const user = {
         try {
             const exist_userName_query = `SELECT user_name FROM user WHERE user_name = ?`;
             const [exist_userName_result] = yield dataBase_1.default.promise().query(exist_userName_query, [userName]);
-            console.log(exist_userName_result.length);
-            //console.log(Array.isArray(exist_userName_result));
-            console.log(exist_userName_result);
             if (exist_userName_result.length > 0) {
                 return true;
             }
@@ -74,7 +70,6 @@ const user = {
             const result = yield dataBase_1.default.promise().query(query, [
                 user_name, hashedPassword, first_name, last_name, telephone, email, street_address, postal_code, city
             ]);
-            console.log('result: ', result[0]);
             if (result[0].insertId !== undefined) {
                 return (yield user.getUser(result[0].insertId))[0];
             }

@@ -19,28 +19,19 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const router = express_1.default.Router();
 const secretkey = process.env.JWT_SECRET;
 router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //parameter at here needs to be same as frontend
     const { user_name, password } = req.body;
-    console.log("userName: " + user_name + ", password: " + password);
     try {
-        const user = yield signin_model_1.default.checkifUserExists(user_name); //as unknown as { user_name: string, password:string, id_user:number };        
+        const user = yield signin_model_1.default.checkifUserExists(user_name);
         if (!user) {
-            console.log("controller2");
             return res.status(404).json({ message: 'Username does not exist' });
         }
-        console.log("controller ifMatchPwd: " + password + ":" + user.password);
         const salt = "ParcelDeliveryApp";
         const hash = crypto_1.default.pbkdf2Sync(password, salt, 10, 20, 'sha512').toString('hex');
         const ifMatchPwd = (hash === user.password);
-        console.log("controller ifMatchPwd: " + ifMatchPwd);
         if (!ifMatchPwd) {
-            console.log("controller3");
             return res.status(404).json({ error: 'Password is incorrect' });
         }
-        console.log("controller user.user_name: " + secretkey + ", user.id_user: " + user.id_user);
-        //read in the back end and front end
-        //server id should check who is correct usr
-        const token = jsonwebtoken_1.default.sign({ user_name: user.user_name, userId: user.id_user }, secretkey, { expiresIn: '10h' });
+        const token = jsonwebtoken_1.default.sign({ type: "session", user_name: user.user_name, userId: user.id_user }, secretkey, { expiresIn: '10h' });
         res.status(200).json({
             userId: user.id_user,
             user_name: user.user_name,
@@ -50,12 +41,12 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         });
     }
     catch (error) {
-        console.log("error: " + res.statusMessage);
+        console.error(error);
         res.status(500).json({ message: 'Internal Server Error', error });
     }
 }));
 router.get('/verify', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const token = req.cookies['token'];
+    const token = req.cookies['userToken'];
     if (!token) {
         return res.status(401).send("unauthorized");
     }

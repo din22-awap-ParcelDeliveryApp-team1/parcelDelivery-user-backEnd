@@ -6,19 +6,15 @@ const router = express.Router();
 interface User {
   id_user: number;
 }
-// http://localhost:3001/user/check-username?user_name=akui
 
 //check if user exists
-router.get('/check-username', async (req:Request, res:Response) => {
-  console.log(req.body + "user_controller");
-  
+router.get('/check-username', async (req:Request, res:Response) => {  
   const user_name = req.query.user_name;
-  console.log(user_name);
+  
   try{
     const ifUserExist = await user.checkifUserExists(user_name as string);
     
     if(ifUserExist){
-      console.log("User exists: " + ifUserExist);
       return res.status(302).json({message: "This username already exists"});
     }
     
@@ -32,14 +28,11 @@ router.get('/check-username', async (req:Request, res:Response) => {
 
 //create user
 router.post('/', async (req:Request, res:Response) => {
-  console.log(req.body + "user_controller");
-  
   const {user_name, password, first_name, last_name, telephone, email, street_address, postal_code, city} = req.body;
   
   try{
     const newUser = await user.createUser(user_name, password, first_name, last_name, telephone, email, street_address, postal_code, city);
     res.status(201).json({ message: 'User created successfully', newUser });
-    console.log(newUser);
     }catch(error){
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });

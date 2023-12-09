@@ -21,12 +21,11 @@ const parcel = {
         try {
             // first get the user telephonenumber from the user table
             const numberQuery = `SELECT telephone FROM user WHERE id_user = ?`;
-            const resultNumber: any = await connection.promise().query(numberQuery, [userid]);          
+            const resultNumber: any = await connection.promise().query(numberQuery, [userid]);         
             
             // then get the parcels where the reciever has the user telephonenumber
             const query = `SELECT * FROM parcel WHERE reciever_telephone = ?`;
             const result = await connection.promise().query<RowDataPacket[]>(query, [resultNumber[0][0].telephone]);
-            
             return result[0];
         }
         catch (e: any) {

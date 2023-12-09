@@ -3,7 +3,6 @@ import parcel from '../models/parcel_model';
 
 const router = express.Router();
 
-
 // Get parcels sent by the logged in user
 router.get('/sent/:id', async (req, res) => {
     const userid = parseInt(req.params.id);
@@ -34,6 +33,11 @@ router.get('/received/:id', async (req, res) => {
 // Post information of a new parcel to the database
 router.post('/parcel', async (req, res) => {
     const newParcel = req.body;
+    // Convert date strings to Date objects
+        newParcel.parcel_dropoff_date = new Date(newParcel.parcel_dropoff_date);
+        newParcel.parcel_readyforpickup_date = new Date(newParcel.parcel_readyforpickup_date);
+        newParcel.parcel_pickup_date = new Date(newParcel.parcel_pickup_date);
+        newParcel.parcel_last_pickup_date = new Date(newParcel.parcel_last_pickup_date);
     try {
         const result = await parcel.postParcel(newParcel);
         res.status(200).json(result);

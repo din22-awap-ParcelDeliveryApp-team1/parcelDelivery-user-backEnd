@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import parcelRouter from './controllers/parcel_controller';
 import userRouter from './controllers/user_controller';
 import signinRouter from './controllers/signin_controller';
+import sendRouter from './controllers/send_controller';
 import auth from './passportMiddleware';
 
 
@@ -17,8 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/parcel', auth, parcelRouter);
 app.use('/user', userRouter);
 app.use('/signin', signinRouter);
-
-app.post('/parcel', auth, parcelRouter);
+app.use('/send', sendRouter);
 
 let serverInstance: any = null;
 module.exports = {

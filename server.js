@@ -10,6 +10,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const parcel_controller_1 = __importDefault(require("./controllers/parcel_controller"));
 const user_controller_1 = __importDefault(require("./controllers/user_controller"));
 const signin_controller_1 = __importDefault(require("./controllers/signin_controller"));
+const send_controller_1 = __importDefault(require("./controllers/send_controller"));
 const passportMiddleware_1 = __importDefault(require("./passportMiddleware"));
 dotenv_1.default.config();
 const PORT = 3001;
@@ -20,7 +21,7 @@ exports.app.use(express_1.default.urlencoded({ extended: false }));
 exports.app.use('/parcel', passportMiddleware_1.default, parcel_controller_1.default);
 exports.app.use('/user', user_controller_1.default);
 exports.app.use('/signin', signin_controller_1.default);
-exports.app.post('/parcel', passportMiddleware_1.default, parcel_controller_1.default);
+exports.app.use('/send', send_controller_1.default);
 let serverInstance = null;
 module.exports = {
     start: function () {

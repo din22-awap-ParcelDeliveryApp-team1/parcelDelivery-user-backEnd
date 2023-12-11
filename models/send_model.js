@@ -21,6 +21,7 @@ const sendParcel = {
             const code = Math.floor(1000 + Math.random() * 9000);
             parcel.pin_code = code;
             parcel.status = 'ready_to_deliver';
+            parcel.parcel_pickup_date = null;
             const query = `INSERT INTO parcel SET ?`;
             const result = yield dataBase_1.default.promise().query(query, [parcel]);
             // Return an object containing the pin code along with other data
